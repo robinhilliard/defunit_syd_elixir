@@ -7,6 +7,9 @@ defmodule DefUnitTalk do
   @type ms2 :: float
   @type feet :: float
   
+  @type lbs :: float
+  @type knots :: float
+  
   @spec number <~ :kg :: kg
   def value <~ :kg do
     value
@@ -21,6 +24,18 @@ defmodule DefUnitTalk do
   def value <~ :feet do
     value
   end
+  
+  @spec number <~ :lbs :: kg
+  def value <~ :lbs do
+    value / 2.20
+  end
+  
+  @spec ms ~> :knots :: knots
+  def value ~> :knots do
+    value * 1.94
+  end
+  
+
   
   @spec g() :: ms2
   def g() do
@@ -42,13 +57,13 @@ defmodule DefUnitTalk do
     (p(altitude) * wing_area * lift_coefficient))
   end
   
-  @spec piper_archer_stall_speed() :: ms
-  def piper_archer_stall_speed() do
-    mass = 1157 <~ :kg
+  @spec piper_archer_stall_speed_knots() :: knots
+  def piper_archer_stall_speed_knots() do
+    mass = 2545 <~ :lbs
     wing_area = 15.8 <~ :m3
     coefficient_of_lift = 2.1
     altitude = 0 <~ :feet
-    stall_speed(mass, wing_area, coefficient_of_lift, altitude)
+    stall_speed(mass, wing_area, coefficient_of_lift, altitude) ~> :knots
   end
   
 end
