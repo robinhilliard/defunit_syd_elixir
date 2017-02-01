@@ -2,9 +2,9 @@ defmodule DefUnitTalk do
   @moduledoc """
   Talk given at Elixir Sydney Meetup.
   """
+  
+  import Unit
 
-  @typedoc "SI weight"
-  @type kg :: float
   @typedoc "SI pressure"
   @type kgm2 :: float
   @typedoc "SI area"
@@ -21,11 +21,7 @@ defmodule DefUnitTalk do
   @typedoc "Navigation velocity"
   @type knots :: float
   
-  @doc "Convert to core unit"
-  @spec number <~ :kg :: kg
-  def value <~ :kg do
-    value
-  end
+  core :kg, "SI Weight"
   
   @doc "Convert to core unit"
   @spec number <~ :m2 :: m2
