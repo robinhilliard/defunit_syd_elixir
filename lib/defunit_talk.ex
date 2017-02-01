@@ -2,51 +2,21 @@ defmodule DefUnitTalk do
   @moduledoc """
   Talk given at Elixir Sydney Meetup.
   """
+ 
+  use DefUnit
   
-  import Unit
-
-  @typedoc "SI pressure"
-  @type kgm2 :: float
-  @typedoc "SI area"
-  @type m2 :: float
-  @typedoc "SI velocity"
-  @type ms :: float
-  @typedoc "SI acceleration"
-  @type ms2 :: float
-  @typedoc "pressure altitude"
-  @type feet :: float
+  @doc_to_operator "to core units"
+  @doc_from_operator "from core units"
   
-  @typedoc "FPS weight"
-  @type lbs :: float
-  @typedoc "Navigation velocity"
-  @type knots :: float
+  DefUnit.core "kg",                :kg,    "SI mass"
+  DefUnit.core "Nm<sup>-2</sup>",   :nm2,   "SI pressure"
+  DefUnit.core "m<sup>2</sup>",     :m2,    "SI area"
+  DefUnit.core "ms<sup>-1</sup>",   :ms,    "SI velocity"
+  DefUnit.core "ms<sup>-2</sup>",   :ms2,   "SI acceleration"
+  DefUnit.core "feet",              :feet,  "Pressure altitude"
   
-  core :kg, "SI Weight"
-  
-  @doc "Convert to core unit"
-  @spec number <~ :m2 :: m2
-  def value <~ :m2 do
-    value
-  end
-  
-  @doc "Convert to core unit"
-  @spec number <~ :feet :: feet
-  def value <~ :feet do
-    value
-  end
-  
-  @doc "Convert to core unit"
-  @spec number <~ :lbs :: kg
-  def value <~ :lbs do
-    value / 2.20
-  end
-  
-  @doc "Convert to other unit"
-  @spec ms ~> :knots :: knots
-  def value ~> :knots do
-    value * 1.94
-  end
-  
+  DefUnit.other "lbs",   :lbs,    0.453592, :kg, "FPS mass"
+  DefUnit.other "knots", :knots,  0.514444, :ms, "Navigation velocity"
 
   @doc "Acceleration due to gravity on Earth"
   @spec g() :: ms2
@@ -55,7 +25,7 @@ defmodule DefUnitTalk do
   end
   
   @doc "Pressure at altitude"
-  @spec p(feet) :: kgm2
+  @spec p(feet) :: nm2
   def p(alt) do
     8.0e-19 * :math.pow(alt, 4)  \
     - 4.0e-14 * :math.pow(alt, 3) \
